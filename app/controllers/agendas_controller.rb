@@ -24,6 +24,7 @@ class AgendasController < ApplicationController
   def destroy
     if @agenda.user == current_user || @agenda.team.owner == current_user
       @agenda.destroy
+      NotificationMailer.with(agenda: @agenda).notify_delete_agenda.deliver_now
     end
     redirect_to root_path
   end
