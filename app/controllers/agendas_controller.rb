@@ -1,5 +1,5 @@
 class AgendasController < ApplicationController
-  # before_action :set_agenda, only: %i[show edit update destroy]
+  before_action :set_agenda, only: %i[show edit update destroy]
 
   def index
     @agendas = Agenda.all
@@ -22,7 +22,10 @@ class AgendasController < ApplicationController
   end
 
   def destroy
-    
+    if @agenda.user == current_user || @agenda.team.owner == current_user
+      @agenda.destroy
+    end
+    redirect_to root_path
   end
 
   private
