@@ -52,6 +52,7 @@ class TeamsController < ApplicationController
     new_owner = User.find(params[:user_id])
     if @team.members.include?(new_owner)
       @team.change_owner(current_user, new_owner)
+      NotificationMailer.with(new_owner: new_owner).notify_change_owner.deliver_now
     end
     redirect_to team_path(@team.id)
   end
