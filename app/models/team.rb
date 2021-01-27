@@ -21,6 +21,7 @@ class Team < ApplicationRecord
       self.assigns.find_by(user_id: new_owner.id).destroy
       self.update(owner: new_owner)
       self.assigns.create(user: owner)
+      self.member_ids.uniq!
     end
   end
 end
