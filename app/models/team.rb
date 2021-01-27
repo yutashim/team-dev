@@ -18,10 +18,9 @@ class Team < ApplicationRecord
 
   def change_owner(owner, new_owner)
     if owner == self.owner
-      self.assigns.find_by(user_id: new_owner.id).destroy
       self.update(owner: new_owner)
       self.assigns.create(user: owner)
-      self.member_ids.uniq!
+      self.member_ids = self.member_ids.uniq
     end
   end
 end
