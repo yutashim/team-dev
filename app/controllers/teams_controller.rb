@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_team, only: %i[show edit update destroy change_owner]
+  before_action :set_team, only: %i[show edit update destroy ]
 
   def index
     @teams = Team.all
@@ -48,6 +48,7 @@ class TeamsController < ApplicationController
   end
 
   def change_owner
+    @team = Team.find(params[:team_id])
     new_owner = User.find(params[:user_id])
     if @team.members.include?(new_owner)
       @team.change_owner(current_user, new_owner)
