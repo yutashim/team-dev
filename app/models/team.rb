@@ -15,4 +15,12 @@ class Team < ApplicationRecord
   def invite_member(user)
     assigns.create(user: user)
   end
+
+  def change_owner(owner, new_owner)
+    if owner == self.owner
+      self.update(owner: new_owner)
+      self.assigns.create(user: owner)
+      self.member_ids = self.member_ids.uniq
+    end
+  end
 end

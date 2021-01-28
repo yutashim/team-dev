@@ -1,5 +1,4 @@
 <p id="notice"><%= notice %></p>
-
 <div class="row">
   <div class="col-md-12">
     <div class="card">
@@ -42,6 +41,9 @@
                       <td><%= image_tag 'default.jpg', size: '40x40' %></td>
                       <td><%= assign.user.email %></td>
                       <td><%= link_to I18n.t('views.button.delete'), team_assign_path(@team, assign), method: :delete, class: 'btn btn-sm btn-danger' %></td>
+                      <% if current_user == @team.owner && assign.user != @team.owner %>
+                        <td><%= link_to '権限移動', team_change_owner_path(team_id: @team.id, user_id: assign.user.id), method: :post %></td>
+                      <% end %>
                     </tr>
                   <% end %>
                 </tbody>
